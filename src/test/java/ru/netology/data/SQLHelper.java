@@ -23,13 +23,13 @@ public class SQLHelper {
   public static DataHelper.VerificationCode getVerificationCode() {
     var codeSQL = "SELECT code FROM auth_codes ORDER BY created DESC LIMIT 1";
     var conn = getConn();
-    return QUERY_RUNNER.query(conn, codeSQL, new ScalarHandler<>());
+    return QUERY_RUNNER.query(conn, codeSQL, new BeanHandler<>(DataHelper.VerificationCode.class));
   }
   @SneakyThrows
   public static void cleanDatabase() {
     var connection = getConn();
     QUERY_RUNNER.execute(connection,"DELETE FROM auth_codes");
-    QUERY_RUNNER.execute(connection,"DELETE FROM card_transaction");
+    QUERY_RUNNER.execute(connection,"DELETE FROM card_transactions");
     QUERY_RUNNER.execute(connection,"DELETE FROM cards");
     QUERY_RUNNER.execute(connection,"DELETE FROM users");
   }
